@@ -122,7 +122,8 @@ async function getHandler(req: NextApiRequest, res: NextApiResponse) {
     );
   } catch (error) {
     log.error("handle callback error", error);
-    res.redirect(state?.returnTo ?? "/apps/installed");
+    // Fix: Use getSafeRedirectUrl to prevent open redirect vulnerability
+    res.redirect(getSafeRedirectUrl(state?.returnTo) ?? "/apps/installed");
   }
 }
 
